@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
     "net/http"
+	"os"
 )
 
 type SortStep struct {
@@ -62,6 +63,10 @@ func setupRouter() *gin.Engine {
 }
 
 func main() {
-    r := setupRouter()
-    r.Run() 
+	r := setupRouter()
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Default port if not specified
+	}
+	r.Run(":" + port)
 }
